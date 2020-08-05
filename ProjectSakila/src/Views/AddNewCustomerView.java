@@ -5,22 +5,37 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import SakilaMVC.*;
+
 public class AddNewCustomerView extends JFrame {
-	private JTextField[] textFields = new JTextField[4];
-	private JLabel[] textFieldLabels = new JLabel[4];
+	
+	final private int NUMTEXTFIELDS = 4;
+	final private int NUMCOMBOBOXES = 2;
+	
+	private JTextField[] textFields = new JTextField[NUMTEXTFIELDS];
+	private JLabel[] textFieldLabels = new JLabel[NUMTEXTFIELDS];
 	private String[] txtLabelValues = {"First Name", "Last Name", "Email Address", "Address"};
 	
-	private JComboBox[] comboBoxes = new JComboBox[2];
-	private JLabel[] comboBoxLabels = new JLabel[2];
+	private JComboBox[] comboBoxes = new JComboBox[NUMCOMBOBOXES];
+	private JLabel[] comboBoxLabels = new JLabel[NUMCOMBOBOXES];
 	private String[] comboLabelValues = {"City", "District"};
 	
 	private JButton submitBtn, clearBtn;
@@ -31,10 +46,10 @@ public class AddNewCustomerView extends JFrame {
 		this.setSize(400, 300);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		//this.setLayout();
-		
+
 		//Initialize and Display Signup Form.
 		initSignupForm();
+		//Init
 		
 		this.setVisible(true);
 	}
@@ -43,7 +58,8 @@ public class AddNewCustomerView extends JFrame {
 		JPanel formPanel = new JPanel(new GridLayout(2, 1, 10, 10));
 		JPanel textFieldsPanel = new JPanel(new GridLayout(4, 2, 10, 10));
 		
-		for(int i = 0; i < 4; i++) {
+		//add textFields
+		for(int i = 0; i < NUMTEXTFIELDS; i++) {
 			textFieldLabels[i] = new JLabel();
 			textFields[i] = new JTextField();
 			
@@ -55,9 +71,10 @@ public class AddNewCustomerView extends JFrame {
 		}
 		
 		JPanel comboFieldsPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-		for(int i = 0; i < 2; i++) {
+		//add comboBoxes
+		for(int i = 0; i < NUMCOMBOBOXES; i++) {
 			comboBoxLabels[i] = new JLabel();
-			comboBoxes[i] = new JComboBox();
+			comboBoxes[i] = new JComboBox(ProjectSakilaController.fillComboCity());
 			
 			comboBoxLabels[i].setText(comboLabelValues[i]);
 			comboBoxes[i].setSize(70, 15);
@@ -83,17 +100,23 @@ public class AddNewCustomerView extends JFrame {
 		this.add(formPanel, BorderLayout.CENTER);
 	}
 	
+	
 	private class Click_Handler implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			if(e.getSource() == submitBtn) {
 				System.out.println("Submit");
+				
 			}
 			
 			if(e.getSource() == clearBtn) {
-				System.out.println("Clear");
+				for(int i = 0; i < NUMTEXTFIELDS; i++) {
+					textFields[i].setText("");
+				}
+				for(int i = 0; i < NUMCOMBOBOXES; i++) {
+					comboBoxes[i].setSelectedIndex(0);
+				}
 			}
 		}
 	}

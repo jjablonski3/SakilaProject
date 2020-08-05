@@ -8,3 +8,6 @@ Nikihl
 
 
 **2020-08-01 4pm - Added some base code to work off of.
+
+**2020-08-05 3:52pm - Added some code for city dropdown and clear button. Created new package
+
