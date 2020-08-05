@@ -7,9 +7,9 @@ import javax.swing.table.TableModel;
  * Date: August 1st 2020
  * Coders: 
  *   James Jablonski
- *   Darshan B
+ *   Darshan Bhavsar
  *   Maad Abduljaleel
- *   Nikihl
+ *   Nikhil Balachandran
  * Program Name: ProjectSakilaView
  * Purpose: Displays the data contained in the model
  */
