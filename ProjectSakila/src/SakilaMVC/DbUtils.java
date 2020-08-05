@@ -1,3 +1,4 @@
+package SakilaMVC;
 /**
  * Program Name:DbUtils.java
  * Purpose:provides a static method that will 
@@ -16,8 +17,12 @@
  */
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData; 
-import java.util.Vector; 
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
  
@@ -102,4 +107,28 @@ public class DbUtils
              return null;
          }//end catch
      }//end method
+     
+     
+     
+     
+     
+     public static Object[] resultSetToDropdown(ResultSet rs)
+     {
+       try {
+          ArrayList<String> names = new ArrayList<String>();
+          while (rs.next())
+          {
+          	 names.add(rs.getString(1));
+          }//end while
+
+          //return the DefaultTableModel object to the line that called it		
+           return names.toArray();
+       } catch (Exception e) 
+       {
+      	 System.out.println("Exception in DbUtils method resultSetToDropdown()...");
+           e.printStackTrace();
+           return null;
+       }//end catch
+     }   
+     
  }//end class
