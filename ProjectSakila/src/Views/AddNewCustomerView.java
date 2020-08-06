@@ -30,13 +30,13 @@ public class AddNewCustomerView extends JFrame {
 	final private int NUMTEXTFIELDS = 4;
 	final private int NUMCOMBOBOXES = 2;
 	
-	private JTextField[] textFields = new JTextField[NUMTEXTFIELDS];
-	private JLabel[] textFieldLabels = new JLabel[NUMTEXTFIELDS];
-	private String[] txtLabelValues = {"First Name", "Last Name", "Email Address", "Address"};
+	protected JTextField[] textFields = new JTextField[NUMTEXTFIELDS];
+	protected JLabel[] textFieldLabels = new JLabel[NUMTEXTFIELDS];
+	protected String[] txtLabelValues = {"First Name", "Last Name", "Email Address", "Address"};
 	
-	private JComboBox[] comboBoxes = new JComboBox[NUMCOMBOBOXES];
-	private JLabel[] comboBoxLabels = new JLabel[NUMCOMBOBOXES];
-	private String[] comboLabelValues = {"City", "District"};
+	protected JComboBox[] comboBoxes = new JComboBox[NUMCOMBOBOXES];
+	protected JLabel[] comboBoxLabels = new JLabel[NUMCOMBOBOXES];
+	protected String[] comboLabelValues = {"City", "District"};
 	
 	private JButton submitBtn, clearBtn;
 	
@@ -106,8 +106,21 @@ public class AddNewCustomerView extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == submitBtn) {
-				System.out.println("Submit");
-				
+				String[] params = {
+						textFields[4].getText(),   //address1
+						//address2
+						//district
+						//city_id(string)
+						//postal code
+						//phone
+						textFields[0].getText(),   //fname
+						textFields[1].getText(),   //lname
+						textFields[2].getText()    //email
+						
+					//NIK: error checking on the fields
+						//error checking here
+				};
+				ProjectSakilaController.insertCustomer(params);
 			}
 			
 			if(e.getSource() == clearBtn) {
