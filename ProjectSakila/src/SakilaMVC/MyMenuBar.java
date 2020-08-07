@@ -26,7 +26,8 @@ public class MyMenuBar extends JMenuBar {
 	JMenu fileMenu, addMenu, reportMenu;
 	JMenuItem fileExit;
 	JMenuItem addNewCust, addNewActor, addNewFilmAndAct, addNewRentalTrans;
-	JMenuItem repRentalInc;
+	JMenuItem repRentalInc, repCatInc, repRangeInc;
+	
 	
 	public MyMenuBar() {
 		//Init Menus.
@@ -67,6 +68,9 @@ public class MyMenuBar extends JMenuBar {
 		
 		if(reportMenu != null) {
 			reportMenu.add(repRentalInc);
+			reportMenu.add(repCatInc);
+			reportMenu.add(repRangeInc);
+
 		}
 	}
 	
@@ -87,7 +91,9 @@ public class MyMenuBar extends JMenuBar {
 		addNewRentalTrans = new JMenuItem("Rent a DVD");
 		
 		//Reports Menu
-		repRentalInc = new JMenuItem("Rental Income");
+		repRentalInc = new JMenuItem("Rental Income Report");
+		repCatInc = new JMenuItem("Category Income Report");
+		repRangeInc = new JMenuItem("Range Income Report");
 	}
 	
 	private void attachEventListeners() {
@@ -104,6 +110,8 @@ public class MyMenuBar extends JMenuBar {
 		
 		//Attaching Event Handlers to Report Menu Options.
 		repRentalInc.addActionListener(handler);
+		repCatInc.addActionListener(handler);
+		repRangeInc.addActionListener(handler);
 	}
 	
 	
@@ -174,8 +182,19 @@ public class MyMenuBar extends JMenuBar {
 			
 			if(e.getSource() == repRentalInc) {
 				System.out.println("Show Rental Report");
+				
+			}
+			if(e.getSource() == repCatInc) {
+				System.out.println("Show Category Report");
+				
+			}
+			
+			if(e.getSource() == repRangeInc) {
+				System.out.println("Show Range Report");
+			
 			}
 		}
+			
 		
 	}
 }
