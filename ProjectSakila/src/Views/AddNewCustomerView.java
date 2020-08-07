@@ -1,5 +1,16 @@
 package Views;
 
+/*
+ * Date: August 1st 2020
+ * Coders: 
+ *   James Jablonski
+ *   Darshan Bhavsar
+ *   Maad Abduljaleel
+ *   Nikhil Balachandran
+ * Program Name: ProjectSakilaController
+ * Purpose: This is a form that allows users to enter information to insert and store a new customer into the database.
+ */
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -26,24 +37,24 @@ import javax.swing.border.EmptyBorder;
 import SakilaMVC.*;
 
 public class AddNewCustomerView extends JFrame {
+	protected String[] txtLabelValues = {"First Name", "Last Name", "Email Address", "Address 1", "Address 2", "District", "Postal Code", "Phone No."};
+	protected String[] comboLabelValues = {"City"};
 	
-	final private int NUMTEXTFIELDS = 4;
-	final private int NUMCOMBOBOXES = 2;
+	final private int NUMTEXTFIELDS = txtLabelValues.length;
+	final private int NUMCOMBOBOXES = comboLabelValues.length;
 	
 	protected JTextField[] textFields = new JTextField[NUMTEXTFIELDS];
 	protected JLabel[] textFieldLabels = new JLabel[NUMTEXTFIELDS];
-	protected String[] txtLabelValues = {"First Name", "Last Name", "Email Address", "Address"};
 	
 	protected JComboBox[] comboBoxes = new JComboBox[NUMCOMBOBOXES];
 	protected JLabel[] comboBoxLabels = new JLabel[NUMCOMBOBOXES];
-	protected String[] comboLabelValues = {"City", "District"};
 	
 	private JButton submitBtn, clearBtn;
 	
 	public AddNewCustomerView() {
 		super("Add New Customer");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(400, 300);
+		this.setSize(400, 370);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 
@@ -55,8 +66,8 @@ public class AddNewCustomerView extends JFrame {
 	}
 	
 	private void initSignupForm() {
-		JPanel formPanel = new JPanel(new GridLayout(2, 1, 10, 10));
-		JPanel textFieldsPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+		JPanel formPanel = new JPanel(new BorderLayout());
+		JPanel textFieldsPanel = new JPanel(new GridLayout(NUMTEXTFIELDS, 2, 10, 10));
 		
 		//add textFields
 		for(int i = 0; i < NUMTEXTFIELDS; i++) {
@@ -70,7 +81,7 @@ public class AddNewCustomerView extends JFrame {
 			textFieldsPanel.add(textFields[i]);
 		}
 		
-		JPanel comboFieldsPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+		JPanel comboFieldsPanel = new JPanel(new GridLayout(NUMCOMBOBOXES+1, 2, 10, 10));
 		//add comboBoxes
 		for(int i = 0; i < NUMCOMBOBOXES; i++) {
 			comboBoxLabels[i] = new JLabel();
@@ -78,6 +89,7 @@ public class AddNewCustomerView extends JFrame {
 			
 			comboBoxLabels[i].setText(comboLabelValues[i]);
 			comboBoxes[i].setSize(70, 15);
+			comboBoxes[i].setSelectedIndex(-1);
 			
 			comboFieldsPanel.add(comboBoxLabels[i]);
 			comboFieldsPanel.add(comboBoxes[i]);
@@ -92,8 +104,8 @@ public class AddNewCustomerView extends JFrame {
 		submitBtn.addActionListener(handler);
 		clearBtn.addActionListener(handler);
 		
-		formPanel.add(textFieldsPanel);
-		formPanel.add(comboFieldsPanel);
+		formPanel.add(textFieldsPanel, BorderLayout.NORTH);
+		formPanel.add(comboFieldsPanel, BorderLayout.SOUTH);
 		
 		formPanel.setBorder(new EmptyBorder(10,10,20,10));
 		
@@ -107,12 +119,12 @@ public class AddNewCustomerView extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == submitBtn) {
 				String[] params = {
-						textFields[4].getText(),   //address1
-						//address2
-						//district
-						//city_id(string)
-						//postal code
-						//phone
+						textFields[3].getText(),   //address1
+						textFields[4].getText(),   //address2
+						textFields[5].getText(),   //district
+						Integer.toString(comboBoxes[0].getSelectedIndex() + 1), //city
+						textFields[6].getText(),   //postal code
+						textFields[7].getText(),   //phone
 						textFields[0].getText(),   //fname
 						textFields[1].getText(),   //lname
 						textFields[2].getText()    //email
@@ -128,7 +140,7 @@ public class AddNewCustomerView extends JFrame {
 					textFields[i].setText("");
 				}
 				for(int i = 0; i < NUMCOMBOBOXES; i++) {
-					comboBoxes[i].setSelectedIndex(0);
+					comboBoxes[i].setSelectedIndex(-1);
 				}
 			}
 		}

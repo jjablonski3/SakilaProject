@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import Views.AddNewActorView;
 import Views.AddNewCustomerView;
 import Views.AddNewFilmView;
 import Views.AddNewTransaction;
@@ -108,8 +109,10 @@ public class MyMenuBar extends JMenuBar {
 	
 	private class Click_Handler implements ActionListener {
 		AddNewCustomerView addCust = null;
+		AddNewActorView addActor = null;
 		AddNewFilmView addFilm = null;
 		AddNewTransaction addTrans = null;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
@@ -133,6 +136,15 @@ public class MyMenuBar extends JMenuBar {
 			
 			if(e.getSource() == addNewActor) {
 				System.out.println("Add New Actor");
+				
+				if(addActor == null) {
+					addActor = new AddNewActorView();
+				}
+				else {
+					addActor.repaint();
+					addActor.setVisible(true);
+					addActor.toFront();
+				}
 			}
 			
 			if(e.getSource() == addNewFilmAndAct) {

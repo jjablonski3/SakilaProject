@@ -69,10 +69,10 @@ public class ProjectSakilaController extends JFrame
 		ResultSet myRslt = null;
 		PreparedStatement myPrepStmt = null;
       try{
-      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
       	  
       	  myStmt = myConn.createStatement();
-      
+      	  
           myPrepStmt = myConn.prepareStatement("SELECT DISTINCT city FROM sakila.city ");
 
           myRslt = myPrepStmt.executeQuery();
@@ -113,7 +113,7 @@ public class ProjectSakilaController extends JFrame
 		PreparedStatement myPrepStmt = null;
 		int rowsAffected;
       try{
-      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
       	  
       	  //Transaction, so we turn autocommit off
       	  myConn.setAutoCommit(false);
@@ -122,7 +122,7 @@ public class ProjectSakilaController extends JFrame
       
           myPrepStmt = myConn.prepareStatement("INSERT INTO sakila.address " +
           		"(address, address2, district, city_id, postal_code, phone, location) " +
-          		"VALUES (?, ?, ?, ?, ?, ?, POINT(0,0)");
+          		"VALUES (?, ?, ?, ?, ?, ?, POINT(0,0))", Statement.RETURN_GENERATED_KEYS);
           
           //address textfield
           myPrepStmt.setString(1, params[0]);
@@ -136,8 +136,11 @@ public class ProjectSakilaController extends JFrame
           myPrepStmt.setString(5, params[4]);
           //phone textfield
           myPrepStmt.setString(6, params[5]);
+          
+          System.out.println(myPrepStmt.toString());
 
           rowsAffected = myPrepStmt.executeUpdate();
+          System.out.println("Rows Affected: " + rowsAffected);
           
           if(rowsAffected != 1)
           {
@@ -150,8 +153,8 @@ public class ProjectSakilaController extends JFrame
           	newRowId = myRslt.getInt(1);
           
           myPrepStmt = myConn.prepareStatement("INSERT INTO sakila.customer " +
-          		"(store_id, first_name, last_name, email, address_id, create date)" +
-          		"VALUES (1, ?, ?, ?, ?, CURRENT_TIMESTAMP)");
+          		"(store_id, first_name, last_name, email, address_id, create_date)" +
+          		"VALUES (1, ?, ?, ?, ?, now())");
           
          //fname textfield
           myPrepStmt.setString(1, params[6]);
@@ -161,6 +164,8 @@ public class ProjectSakilaController extends JFrame
           myPrepStmt.setString(3, params[8]);
           //address ID that was just created
           myPrepStmt.setInt(4, newRowId);
+          
+          System.out.println(myPrepStmt.toString());
           
           rowsAffected = myPrepStmt.executeUpdate();
           
@@ -176,14 +181,19 @@ public class ProjectSakilaController extends JFrame
           
       } 
       catch(Exception ex) {
+    	  	//rollback the transaction
+			try {
+				myConn.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         JOptionPane.showMessageDialog(null, ex.getMessage()); 
       }
       finally
 			{
 				try
 				{
-					//rollback the transaction
-					myConn.rollback();
 					if(myRslt != null)
 						myRslt.close();
 					if(myStmt != null)
