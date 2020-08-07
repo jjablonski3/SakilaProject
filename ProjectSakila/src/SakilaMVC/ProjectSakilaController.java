@@ -69,7 +69,7 @@ public class ProjectSakilaController extends JFrame
 		ResultSet myRslt = null;
 		PreparedStatement myPrepStmt = null;
       try{
-      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
       	  
       	  myStmt = myConn.createStatement();
       	  
@@ -113,7 +113,7 @@ public class ProjectSakilaController extends JFrame
 		PreparedStatement myPrepStmt = null;
 		int rowsAffected;
       try{
-      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
       	  
       	  //Transaction, so we turn autocommit off
       	  myConn.setAutoCommit(false);
