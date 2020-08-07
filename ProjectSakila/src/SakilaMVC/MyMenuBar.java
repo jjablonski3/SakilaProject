@@ -7,6 +7,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import Views.AddNewCustomerView;
+import Views.AddNewFilmView;
+import Views.AddNewTransaction;
 
 /*
  * Date: August 1st 2020
@@ -106,7 +108,8 @@ public class MyMenuBar extends JMenuBar {
 	
 	private class Click_Handler implements ActionListener {
 		AddNewCustomerView addCust = null;
-		
+		AddNewFilmView addFilm = null;
+		AddNewTransaction addTrans = null;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
@@ -134,10 +137,27 @@ public class MyMenuBar extends JMenuBar {
 			
 			if(e.getSource() == addNewFilmAndAct) {
 				System.out.println("Add New File and Actors");
+				
+				if(addFilm == null) {
+					addFilm = new AddNewFilmView();
+				}
+				else {
+					addFilm.repaint();
+					addFilm.setVisible(true);
+					addFilm.toFront();
+				}
 			}
 			
 			if(e.getSource() == addNewRentalTrans) {
 				System.out.println("Rent a New DVD");
+				if(addTrans == null) {
+					addTrans = new AddNewTransaction();
+				}
+				else {
+					addTrans.repaint();
+					addTrans.setVisible(true);
+					addTrans.toFront();
+				}
 			}
 			
 			if(e.getSource() == repRentalInc) {
