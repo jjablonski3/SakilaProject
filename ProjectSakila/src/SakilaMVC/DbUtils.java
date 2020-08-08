@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -112,7 +113,7 @@ public class DbUtils
      
      
      
-     public static Object[] resultSetToDropdown(ResultSet rs)
+     public static DefaultComboBoxModel resultSetToDropdown(ResultSet rs)
      {
        try {
           ArrayList<String> names = new ArrayList<String>();
@@ -122,7 +123,7 @@ public class DbUtils
           }//end while
 
           //return the DefaultTableModel object to the line that called it		
-           return names.toArray();
+           return new DefaultComboBoxModel(names.toArray());
        } catch (Exception e) 
        {
       	 System.out.println("Exception in DbUtils method resultSetToDropdown()...");

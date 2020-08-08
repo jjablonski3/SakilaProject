@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import SakilaMVC.ProjectSakilaController;
+
+
 /*
  * Date: August 1st 2020
  * Coders: 
@@ -60,6 +63,10 @@ public class AddNewActorView extends JFrame {
 		buttonsPanel.add(submitBtn);
 		buttonsPanel.add(clearBtn);
 		
+		Click_Handler handler = new Click_Handler();
+		submitBtn.addActionListener(handler);
+		clearBtn.addActionListener(handler);
+		
 		formPanel.add(textFieldsPanel, BorderLayout.NORTH);
 		formPanel.add(buttonsPanel, BorderLayout.SOUTH);
 		
@@ -76,6 +83,17 @@ public class AddNewActorView extends JFrame {
 			
 			if(e.getSource() == submitBtn) {
 				System.out.println("Add New Actor");
+				
+				String[] params = {
+						fnameField.getText(),   //fname
+						lnameField.getText(),   //lname
+					//NIK: error checking on the fields
+						//error checking here
+				};
+				if(ProjectSakilaController.insertActor(params)) {
+						fnameField.setText("");
+						lnameField.setText("");
+				}
 			}
 			
 			if(e.getSource() == clearBtn) {
