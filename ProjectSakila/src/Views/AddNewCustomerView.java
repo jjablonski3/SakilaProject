@@ -85,7 +85,7 @@ public class AddNewCustomerView extends JFrame {
 		//add comboBoxes
 		for(int i = 0; i < NUMCOMBOBOXES; i++) {
 			comboBoxLabels[i] = new JLabel();
-			comboBoxes[i] = new JComboBox(ProjectSakilaController.fillComboCity());
+			comboBoxes[i] = new JComboBox();
 			
 			comboBoxLabels[i].setText(comboLabelValues[i]);
 			comboBoxes[i].setSize(70, 15);
@@ -94,6 +94,9 @@ public class AddNewCustomerView extends JFrame {
 			comboFieldsPanel.add(comboBoxLabels[i]);
 			comboFieldsPanel.add(comboBoxes[i]);
 		}
+		
+		//populate dropdowns
+		comboBoxes[0].setModel(ProjectSakilaController.fillComboCity());
 		
 		submitBtn = new JButton("Submit");
 		clearBtn  = new JButton("Clear");
@@ -118,6 +121,7 @@ public class AddNewCustomerView extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == submitBtn) {
+				System.out.println("Add New Customer");
 				String[] params = {
 						textFields[3].getText(),   //address1
 						textFields[4].getText(),   //address2
@@ -136,6 +140,7 @@ public class AddNewCustomerView extends JFrame {
 			}
 			
 			if(e.getSource() == clearBtn) {
+				System.out.println("Clear");
 				for(int i = 0; i < NUMTEXTFIELDS; i++) {
 					textFields[i].setText("");
 				}
