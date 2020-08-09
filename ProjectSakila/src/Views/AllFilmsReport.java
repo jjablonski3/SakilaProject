@@ -65,15 +65,15 @@ public class AllFilmsReport extends JFrame
       JPanel resultPanel = new JPanel(new GridLayout(1,2,10,10));
       
       filmBox = new JComboBox();
-      storeBox = new JComboBox();
+      //storeBox = new JComboBox();
       JButton showButton = new JButton("Calculate Rental Price");
-      storeLabel = new JLabel("Store #");
+     // storeLabel = new JLabel("Store #");
       filmLabel = new JLabel("Film name");
       rentalLabel = new JLabel("Rental Amount $");
       rentalText = new JTextField("some amount");
       rentalText.setEditable(false);
-      InfoPanel.add(storeLabel);
-      InfoPanel.add(storeBox);
+      //InfoPanel.add(storeLabel);
+      //InfoPanel.add(storeBox);
       InfoPanel.add(filmLabel);
       InfoPanel.add(filmBox);
       buttonPanel.add(showButton); 
