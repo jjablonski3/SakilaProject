@@ -30,8 +30,8 @@ import javax.swing.border.EmptyBorder;
 
 public class AllFilmsReport extends JFrame
 {
-	JLabel filmLabel, rentalLabel;
-	JComboBox filmBox;
+	JLabel filmLabel, rentalLabel, storeLabel;
+	JComboBox filmBox, storeBox;
 	JTextField rentalText;
 	public AllFilmsReport() {
 		super("All Films Rental Report");
@@ -49,17 +49,20 @@ public class AllFilmsReport extends JFrame
 	
 	private void initAllFilmsRep () {
 		JPanel formPanel = new JPanel(new GridLayout(3,1,10,10));
-		JPanel InfoPanel = new JPanel(new GridLayout(1,2,10,10));
+		JPanel InfoPanel = new JPanel(new GridLayout(2,2,10,10));
 		JPanel buttonPanel = new JPanel(new BorderLayout(10,10));
 		JPanel resultPanel = new JPanel(new GridLayout(1,2,10,10));
 		
 		filmBox = new JComboBox();
-		
+		storeBox = new JComboBox();
 		JButton showButton = new JButton("Calculate Rental Price");
+		storeLabel = new JLabel("Store #");
 		filmLabel = new JLabel("Film name");
 		rentalLabel = new JLabel("Rental Amount $");
 		rentalText = new JTextField("some amount");
 		rentalText.setEditable(false);
+		InfoPanel.add(storeLabel);
+		InfoPanel.add(storeBox);
 		InfoPanel.add(filmLabel);
 		InfoPanel.add(filmBox);
 		buttonPanel.add(showButton); 

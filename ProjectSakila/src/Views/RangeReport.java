@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,9 +18,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 public class RangeReport extends JFrame {
-	JLabel startLbl, endLbl;
+	JLabel startLbl, endLbl,storeLabel;
 	JFormattedTextField startField, endField;
 	JButton getDataBtn;
+	JComboBox storeBox;
 	
 	public RangeReport() {
 		super("Report: Date Range");
@@ -35,10 +37,15 @@ public class RangeReport extends JFrame {
 	
 	private void initUI() {
 		JPanel formPanel = new JPanel(new BorderLayout());
+		JPanel storePanel = new JPanel(new GridLayout(1,2,10,10));
 		JPanel controlsPanel = new JPanel(new GridLayout(5,1,10,10));
+		storeBox = new JComboBox();
+		storeLabel = new JLabel("Store #");
+		
 		
 		startLbl = new JLabel("Start Date");
 		endLbl = new JLabel("End Date");
+		
 		
 		try {
 			//Date Format: MM-DD-YYYY
@@ -51,7 +58,8 @@ public class RangeReport extends JFrame {
 		} //MM-DD-YYYY
 		
 		getDataBtn = new JButton("Get Data");
-		
+		storePanel.add(storeLabel);
+		storePanel.add(storeBox);
 		controlsPanel.add(startLbl);
 		controlsPanel.add(startField);
 		controlsPanel.add(endLbl);
@@ -59,7 +67,7 @@ public class RangeReport extends JFrame {
 		controlsPanel.add(getDataBtn);
 		
 		getDataBtn.addActionListener(new Click_Handler());
-		
+		formPanel.add(storePanel, BorderLayout.NORTH);
 		formPanel.add(controlsPanel);
 		formPanel.setBorder(new EmptyBorder(10,10,10,10));
 		this.add(formPanel, BorderLayout.NORTH);

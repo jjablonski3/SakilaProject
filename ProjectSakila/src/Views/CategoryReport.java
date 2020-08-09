@@ -29,6 +29,8 @@ import SakilaMVC.ProjectSakilaController;
 public class CategoryReport extends JFrame{
 	JComboBox categoryList = new JComboBox(ProjectSakilaController.fillComboCategories());
 	JLabel catLabel = new JLabel("Selct a Category:");
+	JComboBox storeBox = new JComboBox();
+	JLabel storeLabel = new JLabel("Store #");
 	
 	JButton getDataBtn = new JButton("Get Data");
 	JPanel resultPanel = new JPanel(new FlowLayout());
@@ -47,15 +49,19 @@ public class CategoryReport extends JFrame{
 	}
 	
 	private void initUI() {
+		JPanel storePanel = new JPanel(new GridLayout(1,2,10,10));
 		JPanel formPanel = new JPanel(new BorderLayout());
-		JPanel comboPanel = new JPanel(new GridLayout(3,3,10,10));
+		JPanel comboPanel = new JPanel(new GridLayout(5,3,10,10));
 		
+		
+		storePanel.add(storeLabel);
+		storePanel.add(storeBox);
 		comboPanel.add(catLabel);
 		comboPanel.add(categoryList);
 		categoryList.setSelectedIndex(-1);
 		comboPanel.add(getDataBtn);
-		
-		formPanel.add(comboPanel, BorderLayout.NORTH);
+		formPanel.add(storePanel,BorderLayout.NORTH);
+		formPanel.add(comboPanel, BorderLayout.CENTER);
 		formPanel.add(resultPanel, BorderLayout.SOUTH);
 		
 		formPanel.setBorder(new EmptyBorder(10,10,10,10));

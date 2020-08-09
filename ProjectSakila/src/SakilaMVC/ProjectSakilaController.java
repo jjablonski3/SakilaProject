@@ -70,7 +70,7 @@ public class ProjectSakilaController extends JFrame
 			ResultSet myRslt = null;
 			PreparedStatement myPrepStmt = null;
 	      try{
-	      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
+	      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
 	      	  
 	      	  myStmt = myConn.createStatement();
 	      	  
