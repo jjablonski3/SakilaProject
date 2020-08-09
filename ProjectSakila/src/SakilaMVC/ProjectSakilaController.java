@@ -356,7 +356,7 @@ public class ProjectSakilaController extends JFrame
           	
           	//if the loop didn't run, exit this iteration
           	if(actorId == -1) {
-          		continue;
+          		throw new Exception("Actor:" + FirstAndLastName[0].toUpperCase() +" "+  FirstAndLastName[1].toUpperCase()+ "not found.");
           	}
           	
           	myPrepStmt = myConn.prepareStatement("INSERT INTO sakila.film_actor " +
@@ -429,6 +429,85 @@ public class ProjectSakilaController extends JFrame
 			return false;
   }
 	
+	public static Boolean insertTransaction(int[] params){
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRslt = null;
+		PreparedStatement myPrepStmt = null;
+		int rowsAffected;
+      try{
+      	 myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+ 	  
+     		 myStmt = myConn.createStatement();
+     		 
+         myPrepStmt = myConn.prepareStatement("SELECT DISTINCT sakila.inventory.inventory_id, sakila.film.rental_duration FROM sakila.inventory " + 
+        		 	 "INNER JOIN sakila.film " +
+        		 	 "ON sakila.film.film_id = sakila.inventory.film_id " +
+          		 "WHERE sakila.inventory.film_id = ? LIMIT 1");
+         
+         //film id
+         myPrepStmt.setInt(1, params[0]);
+
+         System.out.println(myPrepStmt.toString());
+         myRslt = myPrepStmt.executeQuery();
+
+         //go to first node and read the actor id
+         int inventoryId = -1;
+         int rentalDays = -1;
+         myRslt.next();
+         inventoryId = myRslt.getInt("inventory_id");
+         rentalDays = myRslt.getInt("rental_duration");
+         	
+         if(inventoryId == -1 || rentalDays == -1) {
+         		throw new Exception("Failed to find film in invetory");
+         }
+              
+         myPrepStmt = myConn.prepareStatement("INSERT INTO sakila.rental " +
+         		"(rental_date, inventory_id, customer_id, return_date, staff_id) " +
+         		"VALUES (Now(), ?, ?, (SELECT DATE_ADD(Now(), INTERVAL ? DAY)), 1)");
+         
+         //InventoryId
+         myPrepStmt.setInt(1, inventoryId);
+         //CustomerId
+         myPrepStmt.setInt(2, params[1]);
+         //Rental Duration
+         myPrepStmt.setInt(3, rentalDays);
+         
+         System.out.println(myPrepStmt.toString());
+
+         rowsAffected = myPrepStmt.executeUpdate();
+         System.out.println("Rows Affected: " + rowsAffected);
+         
+         if(rowsAffected != 1)
+         {
+         	throw new SQLException("SQL failed on the rental insert");
+         }
+         
+         return true;
+      }
+      catch(Exception ex) {
+		    JOptionPane.showMessageDialog(null, ex.getMessage()); 
+		  }//end catch
+	    finally
+			{
+				try
+				{
+					if(myRslt != null)
+						myRslt.close();
+					if(myStmt != null)
+						myStmt.close();
+					if(myConn != null)
+						myConn.close();
+				}
+				catch(SQLException ex)
+				{
+					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
+					ex.printStackTrace();
+					return false;
+				}
+			}//end finally
+			return false;
+	}
 	
 	
 	public static DefaultComboBoxModel fillComboCity(){
@@ -551,6 +630,86 @@ public class ProjectSakilaController extends JFrame
 			}//end finally
 			return null;
 	}
+	
+	public static DefaultComboBoxModel fillComboCustomer(){
+  	Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRslt = null;
+		PreparedStatement myPrepStmt = null;
+      try{
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+      	  
+      	  myStmt = myConn.createStatement();
+      	  
+          myPrepStmt = myConn.prepareStatement("SELECT DISTINCT CONCAT(first_name, \" \", last_name) FROM sakila.customer");
+
+          myRslt = myPrepStmt.executeQuery();
+          
+          return DbUtils.resultSetToDropdown(myRslt);
+      } catch(Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage()); 
+      }
+      finally
+			{
+				try
+				{
+					if(myRslt != null)
+						myRslt.close();
+					if(myStmt != null)
+						myStmt.close();
+					if(myConn != null)
+						myConn.close();
+				}
+				catch(SQLException ex)
+				{
+					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
+					ex.printStackTrace();
+					return null;
+				}
+			}//end finally
+			return null;
+  }
+	
+	public static DefaultComboBoxModel fillComboFilm(){
+  	Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRslt = null;
+		PreparedStatement myPrepStmt = null;
+      try{
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+      	  
+      	  myStmt = myConn.createStatement();
+      	  
+          myPrepStmt = myConn.prepareStatement("SELECT title FROM sakila.film");
+
+          myRslt = myPrepStmt.executeQuery();
+          
+          return DbUtils.resultSetToDropdown(myRslt);
+      } catch(Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage()); 
+      }
+      finally
+			{
+				try
+				{
+					if(myRslt != null)
+						myRslt.close();
+					if(myStmt != null)
+						myStmt.close();
+					if(myConn != null)
+						myConn.close();
+				}
+				catch(SQLException ex)
+				{
+					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
+					ex.printStackTrace();
+					return null;
+				}
+			}//end finally
+			return null;
+  }
+	
+	
 	
 	public static void main(String[] args) 
 	{

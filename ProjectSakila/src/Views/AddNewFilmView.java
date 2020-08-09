@@ -33,7 +33,7 @@ import SakilaMVC.*;
 public class AddNewFilmView extends JFrame
 {
 	private String[] txtLabelValues = {"Film Name", "Description","Length","Replacement Cost $", "Actors(separated by commas and a space)"};
-	private String[] comboLabelValues = {"Year Of Release", "Language", "Original Language", "Rental Rate", "Duration","Rating" };
+	private String[] comboLabelValues = {"Year Of Release", "Language", "Original Language", "Rental Rate", "Rental Duration","Rating" };
 	
 	final private int NUMTEXTFIELDS = txtLabelValues.length;
   final private int NUMCOMBOBOXES = comboLabelValues.length;
@@ -170,8 +170,15 @@ public class AddNewFilmView extends JFrame
 				if(behindTheScenesCheckBox.isSelected()) 
 					specialFeaturesString += behindTheScenesCheckBox.getText() + ",";
 				
-				//take off trailing comma
-				specialFeaturesString = specialFeaturesString.substring(0, specialFeaturesString.lastIndexOf(","));
+				if(specialFeaturesString.length() > 1)
+				{
+					//take off trailing comma
+					specialFeaturesString = specialFeaturesString.substring(0, specialFeaturesString.lastIndexOf(","));
+				}
+				else {
+					specialFeaturesString = "";
+				}
+				
 				
 				String[] params = {
 						//"Year Of Release", "Language", "Original Language", "Rental Rate", "Duration","Rating"
