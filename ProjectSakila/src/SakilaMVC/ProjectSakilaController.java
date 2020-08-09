@@ -709,7 +709,9 @@ public class ProjectSakilaController extends JFrame
 			return null;
   }
 	
-	public static DefaultComboBoxModel GenerateCategReport ()
+
+	public static TableModel generateRentalRevenueReport(int stores)
+
 	{
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -720,20 +722,30 @@ public class ProjectSakilaController extends JFrame
       	  
       	  myStmt = myConn.createStatement();
       	  
-          myPrepStmt = myConn.prepareStatement("SELECT SUM(payment.amount) AS 'TotalRevenueForCategory' FROM sakila.payment\r\n" + 
-          		"INNER JOIN sakila.rental\r\n" + 
-          		"ON sakila.payment.rental_id = sakila.rental.rental_id\r\n" + 
-          		"INNER JOIN sakila.inventory\r\n" + 
-          		"ON sakila.inventory.inventory_id = sakila.rental.inventory_id\r\n" + 
-          		"INNER JOIN sakila.film\r\n" + 
-          		"ON sakila.inventory.film_id = sakila.film.film_id\r\n" + 
-          		"INNER JOIN sakila.film_category\r\n" + 
-          		"ON sakila.film.film_id = sakila.film_category.film_id\r\n" + 
-          		"WHERE sakila.film_category.category_id = ?");
 
-          myRslt = myPrepStmt.executeQuery();
+          myPrepStmt = myConn.prepareStatement("SELECT film.title AS 'Title', SUM(payment.amount) AS 'Total Revenue For Film' FROM sakila.payment "+
+          		"INNER JOIN sakila.rental ON sakila.payment.rental_id = sakila.rental.rental_id " +
+          		"INNER JOIN sakila.inventory ON sakila.inventory.inventory_id = sakila.rental.inventory_id " +
+          		"INNER JOIN sakila.film ON sakila.inventory.film_id = sakila.film.film_id " +
+          		"WHERE sakila.inventory.store_id IN (?,?) " + 
+          		"GROUP BY film.film_id " + 
+          		"ORDER BY 2 DESC");
+
+          if(stores == 3) {
+          	myPrepStmt.setInt(1, 1);
+  					myPrepStmt.setInt(2, 2);
+          }
+          else
+          {
+          	myPrepStmt.setInt(1, stores);
+  					myPrepStmt.setInt(2, stores);
+          }
           
-          return DbUtils.resultSetToDropdown(myRslt);
+					myRslt = myPrepStmt.executeQuery();
+			
+					return DbUtils.resultSetToTableModel(myRslt);
+ 
+
       } catch(Exception ex) {
           JOptionPane.showMessageDialog(null, ex.getMessage()); 
       }
@@ -752,7 +764,7 @@ public class ProjectSakilaController extends JFrame
 				{
 					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
 					ex.printStackTrace();
-					return null;
+
 				}
 			}//end finally
 			return null;
@@ -762,6 +774,7 @@ public class ProjectSakilaController extends JFrame
 	{
 		new ProjectSakilaController();
 	}
+
 
 	
 
