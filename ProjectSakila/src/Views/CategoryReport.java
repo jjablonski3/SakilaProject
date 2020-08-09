@@ -49,20 +49,18 @@ public class CategoryReport extends JFrame{
 	}
 	
 	private void initUI() {
-		JPanel storePanel = new JPanel(new GridLayout(1,2,10,10));
 		JPanel formPanel = new JPanel(new BorderLayout());
-		JPanel comboPanel = new JPanel(new GridLayout(5,3,10,10));
+		JPanel controlsPanel = new JPanel(new GridLayout(2,2,10,10));
+		JPanel btnPanel = new JPanel(new FlowLayout());
 		
-		
-		storePanel.add(storeLabel);
-		storePanel.add(storeBox);
-		comboPanel.add(catLabel);
-		comboPanel.add(categoryList);
-		categoryList.setSelectedIndex(-1);
-		comboPanel.add(getDataBtn);
-		formPanel.add(storePanel,BorderLayout.NORTH);
-		formPanel.add(comboPanel, BorderLayout.CENTER);
-		formPanel.add(resultPanel, BorderLayout.SOUTH);
+		controlsPanel.add(storeLabel);
+		controlsPanel.add(storeBox);
+		controlsPanel.add(catLabel);
+		controlsPanel.add(categoryList);
+		formPanel.add(controlsPanel, BorderLayout.NORTH);
+		btnPanel.add(getDataBtn);
+		btnPanel.setBorder(new EmptyBorder(10,10,10,10));
+		formPanel.add(btnPanel);
 		
 		formPanel.setBorder(new EmptyBorder(10,10,10,10));
 		
