@@ -23,6 +23,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -151,6 +152,38 @@ public class AddNewFilmView extends JFrame
 		return new DefaultComboBoxModel(stringArr);	
 	}
 	
+	//[0-9]*\\.?[0-9]*
+//Description : To check if the replacement cost is valid
+	public static Boolean isValidCost(String textFieldValues){
+		if(textFieldValues.matches("[0-9]*\\.?[0-9]*"))
+		{
+			return true;			
+		}
+		return false;			
+
+	}
+	
+	///(^\w+)\s?/
+//Description : To check if the replacement cost is valid
+	public static Boolean isValidFilmName(String textFieldValues){
+		if(textFieldValues.matches("^[a-zA-z]+([\\s][a-zA-Z]+)*$"))
+		{
+			return true;			
+		}
+		return false;			
+
+	}
+	
+	//^[a-zA-Z0-9] + : [a-zA-Z0-9]+(?:,\s+[a-zA-Z0-9]+:[a-zA-Z0-9]+)+$
+//Description : To check if the replacement cost is valid
+	public static Boolean isValidSequece(String textFieldValues){
+		if(textFieldValues.matches("^([a-zA-Z]+\\s[a-zA-Z]+)(,\\s[a-zA-Z]+\\s[a-zA-Z]+)*$"))
+		{
+			return true;			
+		}
+		return false;			
+
+	}
 	
 	private class Click_Handler implements ActionListener {
 
@@ -178,8 +211,76 @@ public class AddNewFilmView extends JFrame
 				else {
 					specialFeaturesString = "";
 				}
+									
+					//if not a valid Film title
+				if(!isValidFilmName(textFields[0].getText()) || textFields[0].getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Film title");
+					textFields[0].requestFocus();
+					textFields[0].setText("");
+					return;
+				}
+				
+				//if Film title is too long
+				if( textFields[0].getText().length() > 255)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a Film title with fewer characters");
+					textFields[0].requestFocus();
+					return;
+				}
 				
 				
+				//if length is invalid
+				if(!AddNewCustomerView.isNumbers(textFields[2].getText()))
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Film length");
+					textFields[2].requestFocus();
+					textFields[2].setText("");
+					return;
+
+				}
+				
+				//if length is too long or smaller than 0
+				try {
+				if(AddNewCustomerView.isNumbers(textFields[2].getText()))
+				{
+					if(Integer.parseInt(textFields[2].getText()) < 0 || Integer.parseInt(textFields[2].getText()) > 65535)
+					{					
+						JOptionPane.showMessageDialog(null, "Please enter a valid Film length in range");
+						textFields[2].requestFocus();
+						textFields[2].setText("");
+						return;
+					}
+				}
+				}catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Film length in range");
+					textFields[2].requestFocus();
+					textFields[2].setText("");
+					return;
+
+	    }
+				//if replacementCost is invalid
+				if(!isValidCost(textFields[3].getText()) || textFields[3].getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Replacement Cost");
+					textFields[3].requestFocus();
+					textFields[3].setText("");
+					return;
+				}
+				
+				//if Actors is invalid
+				
+				//^[a-zA-Z]+\s[a-zA-Z]+(?,\s+[a-zA-Z]+\s[a-zA-Z]+)+$
+				if(!isValidSequece(textFields[4].getText()) || textFields[4].getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter in the following format \n Firstname(space)Lastname(comma)(space)");
+					textFields[4].requestFocus();
+					textFields[4].setText("");
+					return;
+				}
+				
+				
+				else {
 				String[] params = {
 						//"Year Of Release", "Language", "Original Language", "Rental Rate", "Duration","Rating"
 						textFields[0].getText(), //film title
@@ -195,12 +296,12 @@ public class AddNewFilmView extends JFrame
 						specialFeaturesString,
 						textFields[4].getText()//special features
 						
-					//NIK: error checking on the fields
-						//error checking here
+					
 				};
 				ProjectSakilaController.insertFilm(params);
-			}
-			
+			}//else
+				
+			}//submitBtn
 			if(e.getSource() == clearBtn) {
 				System.out.println("Clear");
 			}
