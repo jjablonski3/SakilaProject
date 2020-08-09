@@ -10,6 +10,8 @@ import Views.AddNewActorView;
 import Views.AddNewCustomerView;
 import Views.AddNewFilmView;
 import Views.AddNewTransaction;
+import Views.CategoryReport;
+import Views.RangeReport;
 
 /*
  * Date: August 1st 2020
@@ -120,6 +122,9 @@ public class MyMenuBar extends JMenuBar {
 		AddNewActorView addActor = null;
 		AddNewFilmView addFilm = null;
 		AddNewTransaction addTrans = null;
+		
+		CategoryReport catRep = null;
+		RangeReport rangeRep = null;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -186,12 +191,26 @@ public class MyMenuBar extends JMenuBar {
 			}
 			if(e.getSource() == repCatInc) {
 				System.out.println("Show Category Report");
-				
+				if(catRep == null) {
+					catRep = new CategoryReport();
+				}
+				else {
+					catRep.repaint();
+					catRep.setVisible(true);
+					catRep.toFront();
+				}
 			}
 			
 			if(e.getSource() == repRangeInc) {
 				System.out.println("Show Range Report");
-			
+				if(rangeRep == null) {
+					rangeRep = new RangeReport();
+				}
+				else {
+					rangeRep.repaint();
+					rangeRep.setVisible(true);
+					rangeRep.toFront();
+				}
 			}
 		}
 			

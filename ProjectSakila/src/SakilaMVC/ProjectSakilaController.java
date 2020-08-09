@@ -64,6 +64,48 @@ public class ProjectSakilaController extends JFrame
 		this.add(welcomeLabel);
 	}
 	
+	public static DefaultComboBoxModel fillComboCategories(){
+	  	Connection myConn = null;
+			Statement myStmt = null;
+			ResultSet myRslt = null;
+			PreparedStatement myPrepStmt = null;
+	      try{
+	      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
+	      	  
+	      	  myStmt = myConn.createStatement();
+	      	  
+	          myPrepStmt = myConn.prepareStatement("SELECT DISTINCT name FROM sakila.category");
+
+	          myRslt = myPrepStmt.executeQuery();
+
+	          //while(myRslt.next()){
+	          //    String cityName = myRslt.getString("City");          
+	          //    cityNames.add(cityName);
+	          //}
+	          return DbUtils.resultSetToDropdown(myRslt);
+	      } catch(Exception ex) {
+	          JOptionPane.showMessageDialog(null, ex.getMessage()); 
+	      }
+	      finally
+	      {
+				try
+				{
+					if(myRslt != null)
+						myRslt.close();
+					if(myStmt != null)
+						myStmt.close();
+					if(myConn != null)
+						myConn.close();
+				}
+				catch(SQLException ex)
+				{
+					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
+					ex.printStackTrace();
+					return null;
+				}
+	      }//end finally
+		return null;
+	}
 	
 	public static Boolean insertCustomer(String[] params){
   	Connection myConn = null;
@@ -168,7 +210,7 @@ public class ProjectSakilaController extends JFrame
 				}
 			}//end finally
 			return false;
-  }
+	}
 	
 	
 	public static Boolean insertActor(String[] params){

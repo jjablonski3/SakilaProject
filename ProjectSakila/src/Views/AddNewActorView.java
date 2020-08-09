@@ -32,7 +32,7 @@ public class AddNewActorView extends JFrame {
 	String[] txtFieldLables = {"First Name", "Last Name"};
 	
 	public AddNewActorView() {
-		super("Add New Customer");
+		super("Add New Actor");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(400, 150);
 		this.setLocationRelativeTo(null);
