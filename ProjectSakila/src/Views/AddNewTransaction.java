@@ -14,6 +14,8 @@ package Views;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import SakilaMVC.*;
+
 
 public class AddNewTransaction extends JFrame
 {
@@ -82,16 +85,46 @@ public class AddNewTransaction extends JFrame
 			comboLablesPanel.add(comboBoxLabels[i]);
 			comboLablesPanel.add(comboBoxes[i]);
 		}
+		
+		//populate dropdowns
+		comboBoxes[0].setModel(ProjectSakilaController.fillComboCustomer());
+		comboBoxes[1].setModel(ProjectSakilaController.fillComboFilm());
+		
 		submitBtn = new JButton("Submit");
 		clearBtn  = new JButton("Clear");
 		comboLablesPanel.add(submitBtn);
 		comboLablesPanel.add(clearBtn);
 		
+		Click_Handler handler = new Click_Handler();
+		submitBtn.addActionListener(handler);
+		clearBtn.addActionListener(handler);
 		
+
 		
 		formPanel.add(comboLablesPanel);
 		formPanel.setBorder(new EmptyBorder(10,10,20,10));
 		
 		this.add(formPanel, BorderLayout.CENTER);
+	}
+	
+	
+	private class Click_Handler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == submitBtn) {
+				System.out.println("Submit");
+				
+				int [] params = {
+						comboBoxes[0].getSelectedIndex() + 1,//customer id
+						comboBoxes[1].getSelectedIndex() + 1,//film id
+				};
+				ProjectSakilaController.insertTransaction(params);
+			}
+			
+			if(e.getSource() == clearBtn) {
+				System.out.println("Clear");
+			}
+		}
 	}
 }
