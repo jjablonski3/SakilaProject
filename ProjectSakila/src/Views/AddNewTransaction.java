@@ -31,16 +31,10 @@ import SakilaMVC.*;
 
 public class AddNewTransaction extends JFrame
 {
-	private String[] txtLabelValues = {"Return Day"};
 	private String[] comboLabelValues = {"Customer List", "Movie name"};
 	
-	final private int NUMTEXTFIELDS = txtLabelValues.length;
   final private int NUMCOMBOBOXES = comboLabelValues.length;
-  
-	private JTextField[] textFields = new JTextField[NUMTEXTFIELDS];
-	private JLabel[] textFieldLabels = new JLabel[NUMTEXTFIELDS];
 
-	
 	private JComboBox[] comboBoxes = new JComboBox[NUMCOMBOBOXES];
 	private JLabel[] comboBoxLabels = new JLabel[NUMCOMBOBOXES];
 	
@@ -62,17 +56,7 @@ public class AddNewTransaction extends JFrame
 	private void initAddTransForm() {
 		JPanel formPanel = new JPanel(new GridLayout(1, 2, 10, 10));
 		JPanel comboLablesPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-		for(int i = 0; i < NUMTEXTFIELDS; i++) 
-		{
-			textFieldLabels[i] = new JLabel();
-			textFields[i] = new JTextField();
-			
-			textFieldLabels[i].setText(txtLabelValues[i]);
-			textFields[i].setSize(50,15);
-			comboLablesPanel.add(textFieldLabels[i]);
-			comboLablesPanel.add(textFields[i]);
-			
-		}
+		
 		
 		
 		for(int i = 0; i < NUMCOMBOBOXES; i++) { 
@@ -123,8 +107,9 @@ public class AddNewTransaction extends JFrame
 			}
 			
 			if(e.getSource() == clearBtn) {
-				System.out.println("Clear");
-			}
+				for(int i = 0; i < NUMCOMBOBOXES; i++) {
+					comboBoxes[i].setSelectedIndex(0);
+				}			}
 		}
 	}
 }

@@ -11,6 +11,7 @@ import Views.AddNewCustomerView;
 import Views.AddNewFilmView;
 import Views.AddNewTransaction;
 import Views.AllFilmsReport;
+import Views.BestCustReport;
 import Views.CategoryReport;
 import Views.RangeReport;
 
@@ -29,7 +30,7 @@ public class MyMenuBar extends JMenuBar {
 	JMenu fileMenu, addMenu, reportMenu;
 	JMenuItem fileExit;
 	JMenuItem addNewCust, addNewActor, addNewFilmAndAct, addNewRentalTrans;
-	JMenuItem repRentalInc, repCatInc, repRangeInc;
+	JMenuItem repRentalInc, repCatInc, repRangeInc, repBestCus;
 	
 	
 	public MyMenuBar() {
@@ -73,7 +74,7 @@ public class MyMenuBar extends JMenuBar {
 			reportMenu.add(repRentalInc);
 			reportMenu.add(repCatInc);
 			reportMenu.add(repRangeInc);
-
+			reportMenu.add(repBestCus);
 		}
 	}
 	
@@ -97,6 +98,7 @@ public class MyMenuBar extends JMenuBar {
 		repRentalInc = new JMenuItem("Rental Income Report");
 		repCatInc = new JMenuItem("Category Income Report");
 		repRangeInc = new JMenuItem("Range Income Report");
+		repBestCus = new JMenuItem("Best Customer Report");
 	}
 	
 	private void attachEventListeners() {
@@ -115,6 +117,7 @@ public class MyMenuBar extends JMenuBar {
 		repRentalInc.addActionListener(handler);
 		repCatInc.addActionListener(handler);
 		repRangeInc.addActionListener(handler);
+		repBestCus.addActionListener(handler);
 	}
 	
 	
@@ -126,6 +129,7 @@ public class MyMenuBar extends JMenuBar {
 		AllFilmsReport filmsReport = null;
 		CategoryReport catRep = null;
 		RangeReport rangeRep = null;
+		BestCustReport custRep = null;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -220,6 +224,18 @@ public class MyMenuBar extends JMenuBar {
 					rangeRep.repaint();
 					rangeRep.setVisible(true);
 					rangeRep.toFront();
+				}
+			}
+			if(e.getSource() == repBestCus) {
+				System.out.println("Show Best Customer Report");
+				
+				if(custRep == null) {
+					custRep = new BestCustReport();
+				}
+				else {
+					custRep.repaint();
+					custRep.setVisible(true);
+					custRep.toFront();
 				}
 			}
 		}

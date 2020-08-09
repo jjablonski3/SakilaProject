@@ -42,6 +42,7 @@ public class AllFilmsReport extends JFrame
 		public JTable table;
 		public JScrollPane scrollPane;
 		public AllFilmsReport selfReference = this;
+
 		
 		public AllFilmsReport() {
 			super("All Films Rental Report");

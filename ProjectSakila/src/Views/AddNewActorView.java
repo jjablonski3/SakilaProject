@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -83,18 +84,60 @@ public class AddNewActorView extends JFrame {
 			
 			if(e.getSource() == submitBtn) {
 				System.out.println("Add New Actor");
+				if(!AddNewCustomerView.isLetters(fnameField.getText()) || fnameField.getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Firstname");
+					fnameField.requestFocus();
+					fnameField.setText("");
+
+					return;
+				}
 				
+				//check if the size is too long
+				if( fnameField.getText().length() > 45)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a Firstname with fewer characters");
+					fnameField.requestFocus();
+					fnameField.setText("");
+					return;
+				}
+				
+			//check if the name id invalid
+				if(!AddNewCustomerView.isLetters(lnameField.getText()) || lnameField.getText().isBlank())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a valid Lastname");
+					lnameField.requestFocus();
+					lnameField.setText("");
+					return;
+				}
+				
+			 //check if the size is too long
+				if( lnameField.getText().length() > 45)
+				{
+					JOptionPane.showMessageDialog(null, "Please enter a Lastname with fewer characters");
+					lnameField.requestFocus();
+					lnameField.setText("");
+					return;
+				}
+				
+				
+				else {
 				String[] params = {
 						fnameField.getText(),   //fname
 						lnameField.getText(),   //lname
-					//NIK: error checking on the fields
-						//error checking here
+		
 				};
+				
+				//Successfully inserted
 				if(ProjectSakilaController.insertActor(params)) {
+					JOptionPane.showMessageDialog(null, "Actor '" + fnameField.getText() + " " +lnameField.getText() + "' succesfully inserted");
+
 						fnameField.setText("");
 						lnameField.setText("");
 				}
-			}
+				}//else
+			}//submitBtn
+			
 			
 			if(e.getSource() == clearBtn) {
 				System.out.println("Clear Fields");

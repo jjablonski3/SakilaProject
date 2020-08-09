@@ -70,7 +70,7 @@ public class ProjectSakilaController extends JFrame
 			ResultSet myRslt = null;
 			PreparedStatement myPrepStmt = null;
 	      try{
-	      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","290500Db!");
+	      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
 	      	  
 	      	  myStmt = myConn.createStatement();
 	      	  
@@ -709,7 +709,9 @@ public class ProjectSakilaController extends JFrame
 			return null;
   }
 	
+
 	public static TableModel generateRentalRevenueReport(int stores)
+
 	{
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -720,6 +722,7 @@ public class ProjectSakilaController extends JFrame
       	  
       	  myStmt = myConn.createStatement();
       	  
+
           myPrepStmt = myConn.prepareStatement("SELECT film.title AS 'Title', SUM(payment.amount) AS 'Total Revenue For Film' FROM sakila.payment "+
           		"INNER JOIN sakila.rental ON sakila.payment.rental_id = sakila.rental.rental_id " +
           		"INNER JOIN sakila.inventory ON sakila.inventory.inventory_id = sakila.rental.inventory_id " +
@@ -742,6 +745,7 @@ public class ProjectSakilaController extends JFrame
 			
 					return DbUtils.resultSetToTableModel(myRslt);
  
+
       } catch(Exception ex) {
           JOptionPane.showMessageDialog(null, ex.getMessage()); 
       }
@@ -760,6 +764,7 @@ public class ProjectSakilaController extends JFrame
 				{
 					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
 					ex.printStackTrace();
+
 				}
 			}//end finally
 			return null;
