@@ -709,12 +709,67 @@ public class ProjectSakilaController extends JFrame
 			return null;
   }
 	
-	
+	public static TableModel generateRentalRevenueReport(int stores)
+	{
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRslt = null;
+		PreparedStatement myPrepStmt = null;
+      try{
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+      	  
+      	  myStmt = myConn.createStatement();
+      	  
+          myPrepStmt = myConn.prepareStatement("SELECT film.title AS 'Title', SUM(payment.amount) AS 'Total Revenue For Film' FROM sakila.payment "+
+          		"INNER JOIN sakila.rental ON sakila.payment.rental_id = sakila.rental.rental_id " +
+          		"INNER JOIN sakila.inventory ON sakila.inventory.inventory_id = sakila.rental.inventory_id " +
+          		"INNER JOIN sakila.film ON sakila.inventory.film_id = sakila.film.film_id " +
+          		"WHERE sakila.inventory.store_id IN (?,?) " + 
+          		"GROUP BY film.film_id " + 
+          		"ORDER BY 2 DESC");
+
+          if(stores == 3) {
+          	myPrepStmt.setInt(1, 1);
+  					myPrepStmt.setInt(2, 2);
+          }
+          else
+          {
+          	myPrepStmt.setInt(1, stores);
+  					myPrepStmt.setInt(2, stores);
+          }
+          
+					myRslt = myPrepStmt.executeQuery();
+			
+					return DbUtils.resultSetToTableModel(myRslt);
+ 
+      } catch(Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage()); 
+      }
+      finally
+			{
+				try
+				{
+					if(myRslt != null)
+						myRslt.close();
+					if(myStmt != null)
+						myStmt.close();
+					if(myConn != null)
+						myConn.close();
+				}
+				catch(SQLException ex)
+				{
+					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
+					ex.printStackTrace();
+				}
+			}//end finally
+			return null;
+	}
 	
 	public static void main(String[] args) 
 	{
 		new ProjectSakilaController();
 	}
+
 
 	
 

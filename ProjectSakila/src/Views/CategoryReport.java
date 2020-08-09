@@ -70,6 +70,7 @@ public class CategoryReport extends JFrame{
 			// TODO Auto-generated method stub
 			if(e.getSource() == getDataBtn) {
 				System.out.println("Generate Category Report");
+				
 			}
 		}
 		
