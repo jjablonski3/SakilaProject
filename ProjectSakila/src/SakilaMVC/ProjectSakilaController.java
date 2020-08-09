@@ -709,7 +709,54 @@ public class ProjectSakilaController extends JFrame
 			return null;
   }
 	
-	
+	public static DefaultComboBoxModel GenerateCategReport ()
+	{
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRslt = null;
+		PreparedStatement myPrepStmt = null;
+      try{
+      	  myConn = DriverManager.getConnection("jdbc:mysql://localhost/sakila","root","password");
+      	  
+      	  myStmt = myConn.createStatement();
+      	  
+          myPrepStmt = myConn.prepareStatement("SELECT SUM(payment.amount) AS 'TotalRevenueForCategory' FROM sakila.payment\r\n" + 
+          		"INNER JOIN sakila.rental\r\n" + 
+          		"ON sakila.payment.rental_id = sakila.rental.rental_id\r\n" + 
+          		"INNER JOIN sakila.inventory\r\n" + 
+          		"ON sakila.inventory.inventory_id = sakila.rental.inventory_id\r\n" + 
+          		"INNER JOIN sakila.film\r\n" + 
+          		"ON sakila.inventory.film_id = sakila.film.film_id\r\n" + 
+          		"INNER JOIN sakila.film_category\r\n" + 
+          		"ON sakila.film.film_id = sakila.film_category.film_id\r\n" + 
+          		"WHERE sakila.film_category.category_id = ?");
+
+          myRslt = myPrepStmt.executeQuery();
+          
+          return DbUtils.resultSetToDropdown(myRslt);
+      } catch(Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage()); 
+      }
+      finally
+			{
+				try
+				{
+					if(myRslt != null)
+						myRslt.close();
+					if(myStmt != null)
+						myStmt.close();
+					if(myConn != null)
+						myConn.close();
+				}
+				catch(SQLException ex)
+				{
+					System.out.println("SQL Exception INSIDE finally block: " + ex.getMessage());
+					ex.printStackTrace();
+					return null;
+				}
+			}//end finally
+			return null;
+	}
 	
 	public static void main(String[] args) 
 	{

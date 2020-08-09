@@ -28,13 +28,13 @@ import javax.swing.border.EmptyBorder;
 
 public class BestCustReport extends JFrame
 {
-	JComboBox bestCusBox;
-	JLabel bestCusLbl;
+	JComboBox bestCusBox, storeBox;
+	JLabel bestCusLbl, storeLbl;
 	JButton reportButton;
 	public BestCustReport() {
 		super("Best Customer Report");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(500, 150);
+		this.setSize(500, 240);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		
@@ -45,15 +45,20 @@ public class BestCustReport extends JFrame
 	
 	private void initBestCusReport()
 	{
+		
 		bestCusLbl = new JLabel("Best Customer");
 		bestCusBox = new JComboBox();
+		storeBox = new JComboBox();
+		storeLbl = new JLabel("Store #");
 		reportButton = new JButton("Submit");
 		JPanel formPanel = new JPanel(new BorderLayout(20,20));
 		JPanel buttonPanel = new JPanel(new BorderLayout());
-		JPanel InfoPanel = new JPanel(new GridLayout(1,2,50,50));
+		JPanel InfoPanel = new JPanel(new GridLayout(2,2,50,50));
 		JPanel resultPanel = new JPanel(new FlowLayout());
 		JLabel test = new JLabel("RESULT GOES HERE");
 		buttonPanel.setSize(400,100);
+		InfoPanel.add(storeLbl);
+		InfoPanel.add(storeBox);
 		InfoPanel.add(bestCusLbl);
 		InfoPanel.add(bestCusBox);
 		buttonPanel.add(reportButton, BorderLayout.CENTER);
@@ -61,7 +66,7 @@ public class BestCustReport extends JFrame
 		formPanel.add(InfoPanel, BorderLayout.NORTH);
 		formPanel.add(buttonPanel, BorderLayout.CENTER);
 		formPanel.add(resultPanel, BorderLayout.SOUTH);
-		this.add(formPanel, BorderLayout.NORTH);
+		this.add(formPanel, BorderLayout.CENTER);
 	}
 	
 }
