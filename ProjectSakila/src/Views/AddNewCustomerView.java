@@ -345,7 +345,7 @@ public class AddNewCustomerView extends JFrame {
 							textFields[2].getText()    //email				
 					};
 					if(ProjectSakilaController.insertCustomer(params)) {
-						JOptionPane.showMessageDialog(null, "Actor '" + textFields[0].getText() + textFields[1].getText() + "' succesfully inserted");
+						JOptionPane.showMessageDialog(null, "Customer '" + textFields[0].getText() + " " +  textFields[1].getText() + "' succesfully inserted");
 						
 						for(int i = 0; i < NUMTEXTFIELDS; i++) {
 							textFields[i].setText("");
