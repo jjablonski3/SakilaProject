@@ -10,6 +10,7 @@ import Views.AddNewActorView;
 import Views.AddNewCustomerView;
 import Views.AddNewFilmView;
 import Views.AddNewTransaction;
+import Views.AllFilmsReport;
 import Views.CategoryReport;
 import Views.RangeReport;
 
@@ -122,7 +123,7 @@ public class MyMenuBar extends JMenuBar {
 		AddNewActorView addActor = null;
 		AddNewFilmView addFilm = null;
 		AddNewTransaction addTrans = null;
-		
+		AllFilmsReport filmsReport = null;
 		CategoryReport catRep = null;
 		RangeReport rangeRep = null;
 
@@ -184,11 +185,20 @@ public class MyMenuBar extends JMenuBar {
 					addTrans.toFront();
 				}
 			}
-			
+		
 			if(e.getSource() == repRentalInc) {
 				System.out.println("Show Rental Report");
 				
+				if(filmsReport == null) {
+					filmsReport = new AllFilmsReport();
+				}
+				else {
+					filmsReport.repaint();
+					filmsReport.setVisible(true);
+					filmsReport.toFront();
+				}
 			}
+			
 			if(e.getSource() == repCatInc) {
 				System.out.println("Show Category Report");
 				if(catRep == null) {
