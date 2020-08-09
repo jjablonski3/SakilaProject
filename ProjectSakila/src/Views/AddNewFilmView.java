@@ -194,6 +194,7 @@ public class AddNewFilmView extends JFrame
 				
 				//build special features string
 				String specialFeaturesString = "";
+			
 				if(trailersCheckBox.isSelected()) 
 					specialFeaturesString += trailersCheckBox.getText() + ",";
 				if(commentariesCheckBox.isSelected()) 
@@ -298,12 +299,28 @@ public class AddNewFilmView extends JFrame
 						
 					
 				};
-				ProjectSakilaController.insertFilm(params);
+				//Film successfully inserted
+				if(ProjectSakilaController.insertFilm(params)) {
+					JOptionPane.showMessageDialog(null, "Film '" + textFields[0].getText() + "' succesfully inserted");
+
+				}
 			}//else
 				
 			}//submitBtn
 			if(e.getSource() == clearBtn) {
-				System.out.println("Clear");
+				for(int i = 0; i < NUMTEXTFIELDS; i++) {
+					textFields[i].setText("");
+				}
+				for(int i = 0; i < NUMCOMBOBOXES; i++) {
+					comboBoxes[i].setSelectedIndex(0);
+				}
+				
+				trailersCheckBox.setSelected(false);
+				commentariesCheckBox.setSelected(false);
+				deletedScenesCheckBox.setSelected(false);
+				behindTheScenesCheckBox.setSelected(false);
+
+				
 			}
 		}
 	}
